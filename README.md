@@ -24,6 +24,7 @@
     const inputData2 = fs.readFileSync(0,'utf8').split('');
 
     ```
+    
 
     * readline 모듈
 
