@@ -182,7 +182,8 @@ console.log(`${result1}\n${result2}\n${result3}\n${result4}`);
 ## 2588번 곱셈
 ### 문제
     *(1)과 (2)위치에 들어갈 세 자리 자연수가 주어질 때 (3), (4), (5), (6)위치에 들어갈 값을 구하는 프로그램을 작성하시오.
-    <img src="img/2588.png" width = "300" height = "300">
+![2588](https://user-images.githubusercontent.com/39366835/182073387-fafdec42-2ace-4be7-a8ef-59a3208c3726.png)
+
     * 첫째 줄에 (1)의 위치에 들어갈 세 자리 자연수가, 둘째 줄에 (2)의 위치에 들어갈 세자리 자연수가 주어진다.
     * 첫째 줄부터 넷째 줄까지 차례대로 (3), (4), (5), (6)에 들어갈 값을 출력한다.
 ### 풀이
@@ -294,3 +295,137 @@ if (inputData >= 90){
 }
 ```
 if문을 이용하여 풂.
+
+## 2022.08.01
+## 2753번 윤년
+### 문제
+    *연도가 주어졌을 때, 윤년이면 1, 아니면 0을 출력하는 프로그램을 작성하시오.
+    윤년은 연도가 4의 배수이면서, 100의 배수가 아닐 때 또는 400의 배수일 때이다.
+    예를 들어, 2012년은 4의 배수이면서 100의 배수가 아니라서 윤년이다. 1900년은 100의 배수이고 400의 배수는 아니기 때문에 윤년이 아니다. 하지만, 2000년은 400의 배수이기 때문에 윤년이다.
+    *첫째 줄에 연도가 주어진다. 연도는 1보다 크거나 같고, 4000보다 작거나 같은 자연수이다.
+    *첫째 줄에 윤년이면 1, 아니면 0을 출력한다.
+### 풀이
+``` javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString();
+
+if ( inputData % 4 ===0 && inputData % 100 !== 0 || inputData % 400 === 0){
+    console.log("1")
+} else {
+    console.log("0");
+}
+
+```
+* if문을 사용하여 조건문을 만듦
+- inputData값이 4배의 배수가 된다는 것은 4로 나누었을때 나머지가 0임을 뜻함
+- 4의 배수이면서, 100의 배수가 아닐 때 또는 400의 배수임으로 4의 배수 and (100의 배수 아님 OR 400의 배수) 라고 수식을 정의해야 함.
+
+### 참고
+
+* AND operator
+```javascript
+if(age >=18 && age <=50) //18세 이상 50세 이하
+```
+true && true 만 true
+true && false 이면 false
+
+*OR operator
+```javascript
+if(age >=18 || age <=50) //18세 이상 또는 50세 이하
+```
+하나의 조건만 true여도 true
+
+## 2022.08.09
+## 14681번 사분면 고르기
+### 문제
+    * 사분면은 아래 그림처럼 1부터 4까지 번호를 갖는다. "Quadrant n"은 "제n사분면"이라는 뜻이다. 
+    
+    예를 들어, 좌표가 (12, 5)인 점 A는 x좌표와 y좌표가 모두 양수이므로 제1사분면에 속한다. 점 B는 x좌표가 음수이고 y좌표가 양수이므로 제2사분면에 속한다.
+
+    점의 좌표를 입력받아 그 점이 어느 사분면에 속하는지 알아내는 프로그램을 작성하시오. 단, x좌표와 y좌표는 모두 양수나 음수라고 가정한다.
+    * 첫 줄에는 정수 x가 주어진다. (−1000 ≤ x ≤ 1000; x ≠ 0) 다음 줄에는 정수 y가 주어진다. (−1000 ≤ y ≤ 1000; y ≠ 0)
+
+    * 점 (x, y)의 사분면 번호(1, 2, 3, 4 중 하나)를 출력한다.
+### 풀이
+```javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().split("\n");
+//fs모듈로 inputData 값을 받음. 엔터로 값이 분리 되어 있기 때문에 split으로 값을 받음
+
+const A = parseInt(inputData[0]);
+const B = parseInt(inputData[1]);
+
+// and 연산자를 사용하여 if문으로 값을 도출 받음.
+
+if (A > 0 && B > 0){ // A,B 모두 0 보다 큰 값이면
+    console.log("1"); // "1" 를 출력함
+} else if (A < 0 && B > 0){ // A가 0보다 작고 B가 0보다 크면
+    console.log("2"); // "2" 를 출력함.
+} else if (A < 0 && B < 0){
+    console.log("3");
+} else if ( A > 0 && B < 0 ) {
+    console.log("4");
+}
+```
+## 2022.08.10
+## 2884번 알람 시계
+### 문제 요약
+    * 현재 상근이가 설정한 알람 시각이 주어졌을 때, 창영이의 방법(45분 일찍 알람 설정하기)을 사용한다면, 이를 언제로 고쳐야 하는지 구하는 프로그램을 작성하시오.
+    * 첫째 줄에 두 정수 H와 M이 주어진다. (0 ≤ H ≤ 23, 0 ≤ M ≤ 59) 그리고 이것은 현재 상근이가 설정한 놓은 알람 시간 H시 M분을 의미한다.
+    입력 시간은 24시간 표현을 사용한다. 24시간 표현에서 하루의 시작은 0:0(자정)이고, 끝은 23:59(다음날 자정 1분 전)이다. 시간을 나타낼 때, 불필요한 0은 사용하지 않는다.
+    *첫째 줄에 상근이가 창영이의 방법을 사용할 때, 설정해야 하는 알람 시간을 출력한다. (입력과 같은 형태로 출력하면 된다.)
+### 풀이
+```javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().split(" ");
+
+const A = parseInt(inputData[0]); //시간
+const B = parseInt(inputData[1]); //분
+
+const totalM = (A*60+B)-45; // 시각을 분 단위로 바꾸고 -45분을 해줌
+
+// 시간 조건이 (0 ≤ H ≤ 23, 0 ≤ M ≤ 59) 임으로 "24 00" 나오지 않게 if문 사용
+if (totalM >0){ //계산된 시간이 0 초과일때
+const resultA = Math.floor(totalM / 60); // 60으로 나누어 내림한 시간 출력
+const resultB = totalM % 60 ; // 60으로 나눈 나머지로 분 출력
+console.log(resultA, resultB);
+
+} else if (totalM < 0 ){ //계산된 시간이 0 미만일때
+const totalM1 = 1440 + totalM; 
+// 24*60 시간에 음수가 된 totalM을 더함
+// A = 0 , B = 1 일때 totalM = -44이다. 24시간에서 totalM을 더해 나타냄
+const resultAA =  Math.floor(totalM1 / 60);
+const resultBB = totalM1 % 60;
+console.log(resultAA, resultBB);
+
+} else if (totalM === 0){ //계산된 시간이 0일때 "24 00"이 출력되지 않도록 따로 출력값을 설정.
+    console.log("0 0");
+}
+```
+### 참고사항
+* 너무 어렵게 푼 거 같다. 다른 블로그를 참고해보니 let을 사용해서 변수값을 계속 업데이트하여 간단하게 풀었다.
+*변수명 설정이 아쉽다. A,B 보다는 시간과 분이 나타내니 H,M이 더 보기 편할 거 같다.
+
+```javascript
+let fs = require('fs');
+let inputData = fs.readFileSync(0,'utf8').toString().split(" ");
+
+let H = parseInt(inputData[0]);
+let M = parseInt(inputData[1]);
+
+solution(H,M);
+
+function solution(H,M){
+    if(M>=45){
+        console.log(H,M-45); // M이 45이상이면 H값 변경없이 M값만 -45 연산해주면 됨.
+    } else if(M<45){ // M이 45이상일때 H가 0일때와 0이 아닐때로 나뉨
+        if (H !==0){
+            console.log(H-1,60+M-45); //H가 0이 아니고 M이 45미만임으로 H에 -1해주고, M에 60분을 더해 45분을 빼줌.
+            //예를 들어 H=10,M=10이면, H -1 해서 H=9, M=60+10-45=25 으로 출력함
+        } else if( H === 0){ // H이가 0이면,출력값 H는 23으로 고정, M값만 계산해줌.
+            console.log(23, 60+M-45);
+        }
+    }
+}
+```
+* 시간 조건이 (0 ≤ H ≤ 23, 0 ≤ M ≤ 59) 임을 if문에서 고려하지 않고 코드를 짤 수 있음.
