@@ -431,3 +431,98 @@ function solution(H,M){
 }
 ```
 * 시간 조건이 (0 ≤ H ≤ 23, 0 ≤ M ≤ 59) 임을 if문에서 고려하지 않고 코드를 짤 수 있음.
+
+## 2022.08.11
+## 2525번 오븐 시계
+### 문제
+    * 훈제오리구이를 시작하는 시각과 오븐구이를 하는 데 필요한 시간이 분단위로 주어졌을 때, 오븐구이가 끝나는 시각을 계산하는 프로그램을 작성하시오.
+    * 첫째 줄에는 현재 시각이 나온다. 현재 시각은 시 A (0 ≤ A ≤ 23) 와 분 B (0 ≤ B ≤ 59)가 정수로 빈칸을 사이에 두고 순서대로 주어진다. 두 번째 줄에는 요리하는 데 필요한 시간 C (0 ≤ C ≤ 1,000)가 분 단위로 주어진다. 
+    * 첫째 줄에 종료되는 시각의 시와 분을 공백을 사이에 두고 출력한다. (단, 시는 0부터 23까지의 정수, 분은 0부터 59까지의 정수이다. 디지털 시계는 23시 59분에서 1분이 지나면 0시 0분이 된다.)
+### 풀이
+```javascript
+//입력값이 [14 30\n20] 이기 때문에 첫 줄과 두번째 줄을 \n으로 나누고 첫 번째주를 다시 띄어쓰기로 나눈다
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().split("\n");
+const times = inputData[0].split(" ");
+const cookingTimes = parseInt(inputData[1]);
+const H = parseInt(times[0]);
+const M = parseInt(times[1]);
+
+solution(H,M,cookingTimes);
+
+
+function solution(H,M,cookingTimes){
+    const result = H*60+M+cookingTimes ; //현재 시각과 걸리는 시간을 더해 분단위로 나타냄.
+    const resultH = Math.floor(result/60); //분단위 시각을 60으로 나눠 내림하여 시를 나타냄.
+    const resultM = result%60;// 분단위 시각을 60을 나눈 나머지로 분을 나타냄.
+    if (resultH >= 24){ // 만약 resultH가 24시간이 넘어가면 -24시간을 해주어 24시가 초과되는 시간을 방지함.
+        console.log(resultH-24,resultM);
+    }else
+    console.log(resultH,resultM);
+
+}
+```
+
+### 삽질
+```javascript
+
+solution(H,M,cookingTimes);
+
+function solution(H,M,cookingTimes){
+    if (M+cookingTimes >= 60){
+    console.log(H+1,M+cookingTimes-60);
+    } else if(M+cookingTimes < 60) {
+        console.log(H,M+cookingTimes);
+    }
+}
+```
+cookingTimes가 120분이 넘어가면 H+2를 해야줘야되는데 생각 못함.
+너무 단순하게 생각함.
+
+## 2480번
+### 문제
+    * 1에서부터 6까지의 눈을 가진 3개의 주사위를 던져서 다음과 같은 규칙에 따라 상금을 받는 게임이 있다. 
+
+    같은 눈이 3개가 나오면 10,000원+(같은 눈)×1,000원의 상금을 받게 된다. 
+    같은 눈이 2개만 나오는 경우에는 1,000원+(같은 눈)×100원의 상금을 받게 된다. 
+    모두 다른 눈이 나오는 경우에는 (그 중 가장 큰 눈)×100원의 상금을 받게 된다.  
+    예를 들어, 3개의 눈 3, 3, 6이 주어지면 상금은 1,000+3×100으로 계산되어 1,300원을 받게 된다. 또 3개의 눈이 2, 2, 2로 주어지면 10,000+2×1,000 으로 계산되어 12,000원을 받게 된다. 3개의 눈이 6, 2, 5로 주어지면 그중 가장 큰 값이 6이므로 6×100으로 계산되어 600원을 상금으로 받게 된다.
+
+    3개 주사위의 나온 눈이 주어질 때, 상금을 계산하는 프로그램을 작성 하시오.
+    * 첫째 줄에 3개의 눈이 빈칸을 사이에 두고 각각 주어진다. 
+    * 첫째 줄에 게임의 상금을 출력 한다.
+
+### 풀이
+```javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().split(" "); //띄어쓰기로 나누기
+
+let ABC = [parseInt(inputData[0]),parseInt(inputData[1]),parseInt(inputData[2])];
+ABC.sort(); //sort로 오름차순으로 정렬! 
+
+
+const A = ABC[0];
+const B = ABC[1];
+const C = ABC[2];
+
+if (A == B && B ==C){ // 세 숫자가 같으면
+    result1 = 10000+A*1000
+    console.log(result1);
+} else if (A===B || B ===C ){ // 정렬을 해놨기 때문에 경우의 수가 두가지. 
+    if (A ===B){
+        console.log(1000+A*100);
+    } else if( B ===C ){
+        console.log(1000+B*100);
+    }
+} else if(A !== B && B !== C){ //세 숫자가 각기 다르면
+    console.log(C*100); //정렬을 통해 C가 젤 큰 숫자 임으로 C*100
+}
+```
+먼저 sort를 이용해 정렬한 후 if문으로 조건을 나눈다.
+
+### 아쉬운 점
+    * let ABC = [parseInt(inputData[0]),parseInt(inputData[1]),parseInt(inputData[2])];
+    이 부분을 더욱 간단하게 만들고 싶은데 +사용하는 법 말고 parseInt로 묶는 방법이 있는지 모르겠다.
+    * return을 배웠는데 어떻게 활용해야 하는지 모르겠다. return에 대해 더 공부할 것.
+    * 처음에 "A==B==C" 말도 안되는 조건을 완성해놓고 왜 안되는지 한참을 헤맸다. AND, OR 연산자를 공부해놓고... 거기서 헤매다니.. 나중에 고치고 나서 벙쩌있었다. 잊지 말자!
+
