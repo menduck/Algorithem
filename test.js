@@ -1,22 +1,23 @@
-/*const fs = require('fs');
+const fs = require('fs');
 const inputData = fs.readFileSync(0,'utf8').toString().split(" ");
 
-const H = parseInt(inputData[0]);
-const M = parseInt(inputData[1]);*/
+let ABC = [parseInt(inputData[0]),parseInt(inputData[1]),parseInt(inputData[2])];
+ABC.sort();
 
-const H = 10;
-const M = 10;
 
-solution(H,M);
+const A = ABC[0];
+const B = ABC[1];
+const C = ABC[2];
 
-function solution(H,M){
-    if(M>=45){
-        console.log(H,M-45);
-    } else if(M<45){
-        if (H !==0){
-            console.log(H-1,60+M-45);
-        } else if( H === 0){
-            console.log(23, 60+M-45);
-        }
+if (A == B && B ==C){
+    result1 = 10000+A*1000
+    console.log(result1);
+} else if (A===B || B ===C ){
+    if (A ===B){
+        console.log(1000+A*100);
+    } else if( B ===C ){
+        console.log(1000+B*100);
     }
+} else if(A !== B && B !== C){
+    console.log(C*100);
 }
