@@ -682,4 +682,343 @@ if(sum === TotalA){
 * it문을 for문 안에서 값을 도출하니 누적된 차례대로 값이 도출 되었다.
 for문을 밖에서 최종 값을 도출해서 중간 누적 값이 도출 안되고 최종 값이 나오는 것을 알았다.
 
+## 2022.08.22
+## 15552 빠른 A+B
+### 문제
+* 본격적으로 for문 문제를 풀기 전에 주의해야 할 점이 있다. 입출력 방식이 느리면 여러 줄을 입력받거나 출력할 때 시간초과가 날 수 있다는 점이다.
+* 첫 줄에 테스트케이스의 개수 T가 주어진다. T는 최대 1,000,000이다. 다음 T줄에는 각각 두 정수 A와 B가 주어진다. A와 B는 1 이상, 1,000 이하이다.
+* 각 테스트케이스마다 A+B를 한 줄에 하나씩 순서대로 출력한다.
 
+### 풀이
+
+```javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().split('\n')
+// const inputData = ['5','1 1','12 34','5 500','40 60','1000 1000'];
+
+let caseN = parseInt(inputData[0]);
+let result = ''; // 빈 문자열을 줌
+
+for(let i = 1 ; i < caseN +1 ; i++){
+    let numbers = inputData[i].split(' ');
+    result += parseInt(numbers[0])+parseInt(numbers[1])+'\n' // 하나의 결과값이 나오면 엔터값을 주고 그것을 누적한다.
+    // 만약 ','으로 한다면 2,46,505,100,2000, 이 출력된다. 
+}
+console.log(result)
+```
+
+- 10950번 A+B-3 풀듯이 푸니 시간 초과가 나왔습니다. 한 줄씩 출력하는 것 보다 한 번에 출력하는 것이 더 빠르다라는 것을 알게 되었습니다.
+
+### 추가
+- 주어진 값 다 더하기
+
+``` javascript  
+
+const inputData = ['5','1 1','12 34','5 500','40 60','1000 1000'];
+
+let caseN = parseInt(inputData[0]);
+let result = 0; // result값을 0이라 명시하고 for문을 통해 값이 누적되게 한다.
+
+for(let i = 1 ; i < caseN +1 ; i++){
+    let numbers = inputData[i].split(' ');
+    result += parseInt(numbers[0])+parseInt(numbers[1])
+    
+}
+console.log(result) // 주어진 값이 다 더한 값이 나온다.
+```
+## 11021 A+B-7
+### 문제
+* 두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.
+* 첫째 줄에 테스트 케이스의 개수 T가 주어진다.
+
+    각 테스트 케이스는 한 줄로 이루어져 있으며, 각 줄에 A와 B가 주어진다. (0 < A, B < 10)
+* 각 테스트 케이스마다 "Case #x: "를 출력한 다음, A+B를 출력한다. 테스트 케이스 번호는 1부터 시작한다.
+
+### 풀이
+```javascript
+
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().split('\n')
+// const inputData = ['5','1 1','2 3','3 4','9 8','5 2'];
+
+let caseN = parseInt(inputData[0]);
+let result = ''; // result값을 0이라 명시하고 for문을 통해 값이 누적되게 한다.
+
+for(let i = 1 ; i < caseN +1 ; i++){
+    let numbers = inputData[i].split(' ');
+    let m = parseInt(numbers[0])+parseInt(numbers[1]) //벡터로 이용해 출력하기 위하여 따로 변수 처리한다.
+    result += `Case #${i}: ${m}\n` // 벡터를 이용하여 간단하게 출력!
+   
+}
+console.log(result)
+```
+### 삽질
+```javascript
+
+const inputData = ['5','1 1','2 3','3 4','9 8','5 2'];
+
+let caseN = parseInt(inputData[0]);
+let result = '';
+
+for(let i = 1 ; i < caseN +1 ; i++){
+    let numbers = inputData[i].split(' ');
+    result += 'Case #'+i+': '+ parseInt(numbers[0])+parseInt(numbers[1])+'\n' 
+    // 앞에 문자열을 더해서 출력하려고 했지만, 수식이 더해지지 않고 문자열로 합쳐져 버린다 -> 수식하는 부분을 변수로 설정하여 벡터값으로 출력해보자!
+   
+}
+console.log(result)
+/*
+Case #1: 11
+Case #2: 23
+Case #3: 34
+Case #4: 98
+Case #5: 52
+*/
+```
+## 11022번 A+B -8
+### 문제
+* 두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.
+* 첫째 줄에 테스트 케이스의 개수 T가 주어진다.
+
+    각 테스트 케이스는 한 줄로 이루어져 있으며, 각 줄에 A와 B가 주어진다. (0 < A, B < 10)
+* 각 테스트 케이스마다 "Case #x: A + B = C" 형식으로 출력한다. x는 테스트 케이스 번호이고 1부터 시작하며, C는 A+B이다.
+
+### 풀이
+- 벡터를 이용하여 출력한다.
+
+```javascript
+
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().split('\n')
+// const inputData = ['5','1 1','2 3','3 4','9 8','5 2'];
+
+let caseN = parseInt(inputData[0]);
+let result = '';
+
+for(let i = 1 ; i < caseN +1 ; i++){
+    let numbers = inputData[i].split(' ');
+    let n = parseInt(numbers[0]) ;
+    let m = parseInt(numbers[1]) ;
+    let sum = n+m
+    result += `Case #${i}: ${n} + ${m} = ${sum}\n`
+   
+}
+console.log(result)
+```
+
+## 2438 별 찍기-1
+### 문제
+* 첫째 줄에는 별 1개, 둘째 줄에는 별 2개, N번째 줄에는 별 N개를 찍는 문제
+* 첫째 줄에 N(1 ≤ N ≤ 100)이 주어진다.
+* 첫째 줄부터 N번째 줄까지 차례대로 별을 출력한다.
+
+### 풀이
+```javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString()
+const n = parseInt(inputData)
+
+result = '' // 빈 문자열을 두고
+
+for(let i = 1 ; i < n+1 ; i++){
+    result += '*' // for문 i가 순회할때마다 '*'이 누적된다.
+    console.log(result) // 누적되가면서 한 줄씩 출력
+
+}
+```
+### 추가 풀이
+
+- 한 번에 출력하기.
+
+```javascript
+n = 5
+result = ''
+
+for(let i = 1 ; i < n+1 ; i++){
+    for(let j = 1 ; j <= i;j++){
+        result += '*'; // 순회하면서 '*'이 누적된다.
+    }                     
+    result +="\n"   //한 줄씩 엔터값을 준다 
+}
+console.log(result)
+```
+## 2439 별 찍기 -2
+
+### 문제
+* 첫째 줄에는 별 1개, 둘째 줄에는 별 2개, N번째 줄에는 별 N개를 찍는 문제
+
+    하지만, 오른쪽을 기준으로 정렬한 별(예제 참고)을 출력하시오.
+* 첫째 줄에 N(1 ≤ N ≤ 100)이 주어진다.
+* 첫째 줄부터 N번째 줄까지 차례대로 별을 출력한다.
+
+### 풀이
+- padstart 이용하여 문제 풀기.
+
+```javascript
+
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString()
+const n = parseInt(inputData) // N값을 받음
+
+// const n = 5;
+// const strings = ['*','**','***','****','*****']
+
+result = '';
+
+for(let i = 1 ; i < n+1 ; i++){
+    for(let j = 1 ; j <= i;j++){
+        result += '*'; // 순회하면서 '*'이 누적된다.
+    }  
+                       
+    result += "\n"   //한 줄씩 엔터값을 준다 
+}
+
+let arr = result.split('\n') //map을 사용하기 위해 string을 array로 바꿔준다. -> \n을 기준으로 나눈다
+arr = arr.slice(0,-1); // 마지막 줄에 항상 엔터값이 남기때문에 마지막 엔터값을 제거해준다.
+
+const longestLength = arr.map(value => value.length)[n-1]; //5 -> 가장 길이간 긴 value을 끄집어 낸 다음
+
+// padStart을 사용하여 오른쪽 정렬을 만족시키기 위해 공백을 채워준다.
+arr.forEach(value => console.log(value.padStart(longestLength))); // 목표 길이를 가장 긴 길이인 5(longestLength)로 두고 시작점부터 공백을 채워 목표길이를 채워준다.
+```
+>> 다른 풀이
+
+- 삼항 연산자를 이용하여 풀기
+
+```javascript
+let num = 5
+for (let i = 0; i < num; i++) {
+  let star = '';
+    
+  for (let j = num - 1; j >= 0; j--) { // j는 하나씩 작아짐
+    star += j <= i ? '*' : ' ';
+  }
+  
+  
+  console.log(star);
+}
+```
+j = 4일때 i가 4가 될때까지 star에 공백을 채워주고 4가 되면 *를 넣어준다. -> ____*
+#
+j = 3일때 i가 4가 될때까지 star에 공백을 채워주고 4가 되면 *를 넣어준다. -> ___**
+#
+j = 2일때 i가 4가 될때까지 star에 공백을 채워주고 4가 되면 *를 넣어준다. -> __***
+#
+j = 1일때 i가 4가 될때까지 star에 공백을 채워주고 4가 되면 *를 넣어준다. -> _****
+#
+j = 0일때 i가 4가 될때까지 star에 공백을 채워주고 4가 되면 *를 넣어준다. -> *****
+
+
+
+- 삼항 연산자
+
+```javascript
+let result = true ? 1 : 100; // ? 앞에 true이면 1를 result에게 돌려주겠다.
+console.log(result) // 1
+
+let result2 = true ? console.log("one") : console.log("two")
+console.log(result2)// one
+
+let result3 = false ? console.log("one") : console.log("two")
+console.log(result3)// two
+```
+
+- join을 사용하기
+
+```javascript
+let n = 5
+
+let arr = new Array(n).fill(' '); // n번까지 공백 채운 array 만들기
+
+for (let i = n - 1; i >= 0; i--) {
+  arr[i] = '*'; //i가 하나씩 작아지면서 마지막 값부터 *를 넣어준다
+  
+  console.log(arr.join('')); // 한 줄씩 전체 array를 합치면서 출력한다.
+}
+```
+## 10871 X보다 작은 수
+### 문제
+* 정수 N개로 이루어진 수열 A와 정수 X가 주어진다. 이때, A에서 X보다 작은 수를 모두 출력하는 프로그램을 작성하시오.
+* 첫째 줄에 N과 X가 주어진다. (1 ≤ N, X ≤ 10,000)
+
+    둘째 줄에 수열 A를 이루는 정수 N개가 주어진다. 주어지는 정수는 모두 1보다 크거나 같고, 10,000보다 작거나 같은 정수이다.
+* X보다 작은 수를 입력받은 순서대로 공백으로 구분해 출력한다. X보다 작은 수는 적어도 하나 존재한다.
+
+### 풀이
+>> reduce 매서드 사용해서 풀기
+```javascript
+
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().split('\n')
+
+// inputData = ['10 5','1 10 4 9 2 3 8 5 7 6'];
+
+const A = inputData[0].split(' '); // ['10','5']
+const data = inputData[1].split(' '); // ['1','10','4','9','2','3','8','5','7','6']
+
+
+// const n = parseInt(A[0]); 
+const x = parseInt(A[1]); //x값을 숫자열로 받음.
+
+
+
+const result = data.reduce((acc,cur) => {
+    if((cur < x)){
+        return acc =[...acc,cur] // 현재 값(cur)이 x보다 작으면 acc에 누적된다.
+    }
+    return acc
+},[]);// 기본값을 []으로 설정
+
+
+console.log(result.join(' ')) // array로 배열된 것을 조인하여 공백으로 출력함.
+```
+>> reduce 순회 이해하기 
+- reduce 함수는 네 개의 인자를 가짐.
+    1. 누산기(acc) 2. 현재 값(cur) 3. 현재 인덱스(idx) 4. 원본 배열(src)
+- reduce 함수의 반환 값은 누산기에 할당되고, 누산기는 순회 중 유지되므로 결국 최종 결과는 하나의 값이 된다.
+acc : 
+    1. 
+        acc = []
+        cur = 1
+        idx = 0
+        src = ['1','10','4','9','2','3','8','5','7','6']
+    2.
+        acc = [1] // 5보다 작으므로 배열안에 누적됨.
+        cur = 10
+        idx = 1
+        src = ['1','10','4','9','2','3','8','5','7','6']
+    3.
+        acc = [1] // 10은 5보다 크므로 누적되지 않음.
+        cur = 4
+        idx = 2
+        src = ['1','10','4','9','2','3','8','5','7','6']
+    4.
+        acc = [1,4] // 5보다 작으므로 누적 됨.
+        cur = 9
+        idx = 3
+        src = ['1','10','4','9','2','3','8','5','7','6']
+    
+    이렇게 쭉쭉 순회 하다보면 acc = [ '1', '4', '2', '3' ] 가 담긴다. 
+
+참고 : https://bbangaro.tistory.com/34 , https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+
+>> for문을 이용해서 풀기
+```javascript
+ inputData = ['10 5','1 10 4 9 2 3 8 5 7 6'];
+
+const A = inputData[0].split(' ');
+const data = inputData[1].split(' ');
+
+const n = parseInt(A[0]); //10
+const x = parseInt(A[1]); //5
+
+result = ''
+for (let i = 0; i <= n;i++){
+    if(data[i] < x) { // i가 순회하면서 x보다 작은 수가 만족되면
+       result += data[i] + ' '  // result 값에 공백과 함께 누적된다.
+    }
+    
+}
+
+console.log(result) // 1 4 2 3 
+```
