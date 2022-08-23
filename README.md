@@ -1022,3 +1022,87 @@ for (let i = 0; i <= n;i++){
 
 console.log(result) // 1 4 2 3 
 ```
+
+## 2022.08.23
+## A+B-5
+### 문제
+* 두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.
+* 입력은 여러 개의 테스트 케이스로 이루어져 있다.
+
+    각 테스트 케이스는 한 줄로 이루어져 있으며, 각 줄에 A와 B가 주어진다. (0 < A, B < 10)
+
+    입력의 마지막에는 0 두 개가 들어온다.
+* 각 테스트 케이스마다 A+B를 출력한다.
+### 풀이
+- 길이로 테스트 케이스 계산하기.
+```javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().trim().split("\n");
+//const inputData = ['1 1','2 3','3 4','9 8','5 2','0 0']
+const dataLength = inputData.length - 2 // '0 0'을 제외하고 i가 순회하길 원해 inputData 길이에 - 2를 해줌
+let result = '';
+
+for(let i = 0; i <= dataLength; i++){
+    let splitedData = inputData[i].split(' ');
+    let a = parseInt(splitedData[0]);
+    let b = parseInt(splitedData[1]);
+    let sum = a + b ;
+    result += `${sum}\n` //하나의 값이 나올때 엔터값을 줌
+} 
+console.log(result.slice(0,-1)); // 마지막 값의 엔터값을 없애줌
+```
+- while문 사용하기
+```javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().trim().split("\n");
+//const inputData = ['1 1','2 3','3 4','9 8','5 2','0 0']
+
+while (inputData[0][0] != 0){ // 정수A는 마지막 배열 말곤 0이 될 수 없으므로 조건으로 설정.
+    const numbers = inputData.shift().split(' '); // 젤 앞부분의 배열을 split으로 나눔 '1','1'
+    console.log( +numbers[0] + +numbers[1]);
+}
+```
+    * shift() 이해하기
+    shift() : 배열 맨 앞의 값을 제거하고, 그 제거값을 반환한다.
+```javascript
+    const inputData = ['1 1','2 3','3 4','9 8','5 2','0 0']
+    console.log(inputData.shift()) // 1 1
+    console.log(inputData.shift()) // 2 3
+```
+### 삽질
+- trim 때문이라고 생각 못하고 for문이 이상하다 생각해 한참 삽질 했다...
+- 혹시 모를 앞뒤 공백을 위해 trim!!!!!!!!!!!! 잊지말고 사용하자! :smiley:
+
+
+## 10951 A+B-4
+### 문제
+* 두 정수 A와 B를 입력받은 다음, A+B를 출력하는 프로그램을 작성하시오.
+* 입력은 여러 개의 테스트 케이스로 이루어져 있다.
+
+    각 테스트 케이스는 한 줄로 이루어져 있으며, 각 줄에 A와 B가 주어진다. (0 < A, B < 10)
+* 각 테스트 케이스마다 A+B를 출력한다.
+
+### 풀이
+problem : 10952번과 유사하지만 입력 마지막에 0이 두개 들어오지 않기 때문에 케이스가 몇 개 인지 알 수 없다
+solve : 입력값의 길이를 이용하여 케이스가 몇 개 인지 파악하기.
+
+```javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().trim().split("\n");
+// const inputData = ['1 1','2 3','3 4','9 8','5 2']
+const dataLength = inputData.length - 1 
+let result = '';
+
+for(let i = 0; i <= dataLength; i++){
+    let splitedData = inputData[i].split(' ');
+    let a = parseInt(splitedData[0]);
+    let b = parseInt(splitedData[1]);
+    let sum = a + b ;
+    result += `${sum}\n`
+} 
+console.log(result.slice(0,-1));
+```
+inputData = ['1 1','2 3','3 4','9 8','5 2']
+
+inputData의 인덱스값은 0,1,2,3,4 이고 길이는 5이다.
+i가 인덱스 값 4까지 순회해야기 때문에 길이에 -1을 해주면 케이스의 개수를 알 수 있다.
