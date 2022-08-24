@@ -1106,3 +1106,77 @@ inputData = ['1 1','2 3','3 4','9 8','5 2']
 
 inputData의 인덱스값은 0,1,2,3,4 이고 길이는 5이다.
 i가 인덱스 값 4까지 순회해야기 때문에 길이에 -1을 해주면 케이스의 개수를 알 수 있다.
+
+## 2022.08.24
+## 1110 더하기 사이클
+
+### 문제
+<1110.png>
+* 0보다 크거나 같고, 99보다 작거나 같은 정수가 주어질 때 다음과 같은 연산을 할 수 있다. 먼저 주어진 수가 10보다 작다면 앞에 0을 붙여 두 자리 수로 만들고, 각 자리의 숫자를 더한다. 그 다음, 주어진 수의 가장 오른쪽 자리 수와 앞에서 구한 합의 가장 오른쪽 자리 수를 이어 붙이면 새로운 수를 만들 수 있다. 다음 예를 보자.
+
+    26부터 시작한다. 2+6 = 8이다. 새로운 수는 68이다. 6+8 = 14이다. 새로운 수는 84이다. 8+4 = 12이다. 새로운 수는 42이다. 4+2 = 6이다. 새로운 수는 26이다.
+
+    위의 예는 4번만에 원래 수로 돌아올 수 있다. 따라서 26의 사이클의 길이는 4이다.
+
+    N이 주어졌을 때, N의 사이클의 길이를 구하는 프로그램을 작성하시오. 
+* 첫째 줄에 N이 주어진다. N은 0보다 크거나 같고, 99보다 작거나 같은 정수이다.
+* 첫째 줄에 N의 사이클 길이를 출력한다.
+
+### 풀이
+
+- 문자열을 이용하기 풀어보기.
+    - inputData를 array로 만들어 십의 자리와 일의 자리를 분리한다.
+        - 한 자릿수 숫자들은 앞에 0을 붙어준다. ex) 01,02,03 ...
+    - newNum를 만들기 위해서 분리된 숫자들을 더해주고, 가장 오른쪽 자리의 수와 더한 sum값을 문자열로 합친다.
+    - newNum와 inputData값이 같으면 반복문을 멈추고 caseNum을 출력한다.
+
+```javascript
+const fs = require('fs');
+let inputData = fs.readFileSync(0,'utf8').toString().trim()
+
+// 한자리 수 N값 앞에 0을 넣어 두자리 수 표현하기
+if (inputData.length ===1){
+    inputData = '0'+inputData
+}
+
+let caseNum = 0 ; // 기본값을 설정해주어야 카운팅이 된다.
+let newNum = inputData; 
+
+// newNum가 inputData가 되면 되기전까지 caseNum에 카운팅 해줌.
+while(true){
+    let splitedInputData = Array.from(newNum) //십의 자리 수와 일의 자리 숫자 하나씩 array 값에 넣는다 ex) ['2','6']
+    let sum = (parseInt(splitedInputData[0]) + parseInt(splitedInputData[1])) % 10; // sum이 두자리수가 나올수 있으므로 10으로 나눈 나머지값을 받는다.
+    newNum = splitedInputData[1] + sum.toString() // 주어진 수의 가장 오른쪽 숫자와 sum값을 문자열로 합친다.
+    caseNum++ // 횟수 값 저장
+    if(newNum === inputData) break ; // newNum와 inputData값이 같으면 반복문을 멈춘다.
+
+}
+console.log(caseNum);
+```
+
+- 숫자로 풀기
+
+```javascript
+const fs = require('fs');
+let inputData = fs.readFileSync(0,'utf8').toString().trim()
+let n = parseInt(inputData[0]);
+
+
+let caseNum = 0 ;
+let newNum = n;
+
+while(true){
+    
+    let sum = Math.floor(newNum/10) + (newNum%10); // 십의 자리 수 = 주어진 숫자 / 10 의 정수값, 일의 자리 수 = 주어진 숫자 10으로 나눈 나머지
+    newNum = (newNum%10)*10 + sum%10; // 앞선 수의 오른쪽 숫자에 x10을 하여 십의자리를 만들어주고 sum값의  10으로 나눈 나머지 값을 더해 newNum을 도출함.
+    caseNum++;
+    if(newNum === n) break ;
+
+}
+console.log(caseNum);
+```
+### 삽질
+
+반나절을 붙잡고 머리를 싸맸다. 괜히 문자열로 시작했나. 이미 시작한거 문자열로 해보고 싶은데..하면서 내가 적은 코드를 멱살을 쥐고 싶었다 ㅎㅎ 
+
+내가 쓴 코드를 다시 종이에 적어 숫자를 넣어가며 반복하면서 왜 코드가 안 돌아가는지 알게됐다! 결국 해냈으니 행복한 24일 입니당! ㅎㅎ 
