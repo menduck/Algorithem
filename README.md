@@ -1175,8 +1175,54 @@ while(true){
 }
 console.log(caseNum);
 ```
-### 삽질
-
+### 마치며
 반나절을 붙잡고 머리를 싸맸다. 괜히 문자열로 시작했나. 이미 시작한거 문자열로 해보고 싶은데..하면서 내가 적은 코드를 멱살을 쥐고 싶었다 ㅎㅎ 
 
 내가 쓴 코드를 다시 종이에 적어 숫자를 넣어가며 반복하면서 왜 코드가 안 돌아가는지 알게됐다! 결국 해냈으니 행복한 24일 입니당! ㅎㅎ 
+
+## 2022.08.25
+## 3003 킹, 퀸, 룩, 비숍, 나이트, 폰
+
+### 문제
+* 체스는 총 16개의 피스를 사용하며, 킹 1개, 퀸 1개, 룩 2개, 비숍 2개, 나이트 2개, 폰 8개로 구성.
+    
+    검정색 피스는 모두 있고, 흰색 피스는 개수가 올바르지 않음.
+
+    흰색 피스의 개수가 주어졌을 때, 몇 개가 더 필요하거나 덜어야되는지 코드 작성.
+* 첫째 줄에 동혁이가 찾은 흰색 킹, 퀸, 룩, 비숍, 나이트, 폰의 개수가 주어진다. 이 값은 0보다 크거나 같고 10보다 작거나 같은 정수이다.
+* 첫째 줄에 입력에서 주어진 순서대로 몇 개의 피스를 더하거나 빼야 되는지를 출력한다. 만약 수가 양수라면 동혁이는 그 개수 만큼 피스를 더해야 하는 것이고, 음수라면 제거해야 하는 것이다.
+
+### 풀이
+- 검정 피스와 흰색 피스를 배열을 비교하여 결과값 도출했습니다.
+    - 검정 피스의 요소 값에서 흰색 피스를 빼면 필요한 개수만큼 결과값이 나옵니다.
+- for문을 통해 인덱스 값을 반복하여 연산하며, result값에 누적됩니다.
+```javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().trim().split(' ')
+
+//const inputData =[2,1,2,1,2,1]
+
+const blackNum = [1,1,2,2,2,8]
+let result = ''
+
+for(i = 0; i < 6; i++){
+    subtract = (parseInt(blackNum[i]) - parseInt(inputData[i]))
+    result += subtract +' ' 
+}
+
+console.log(result)
+```
+- map 매서드로 풀어보기
+
+    -map에 익숙해지기 위해 map으로도 한번 풀어봤다. 잘 이용하면 다른 코드들도 간단하게 짤 수 있을 거 같다.
+
+```javascript
+const fs = require('fs');
+const inputData = fs.readFileSync(0,'utf8').toString().trim().split(' ').map(Number) //[2,1,2,1,2,1]
+
+const blackNum = [1,1,2,2,2,8]
+
+const result = blackNum.map((ele,idx) => ele - inputData[idx]); //blackNum 각 요소에서 inputData값의 요소들을 빼줌.
+//console.log(result); [ -1, 0, 0, 1, 0, 7 ]
+console.log(result.join(' ')) // 출력값이 띄어쓰기로 구분 되어 있으므로 join을 이용하여 출력함. -1 0 0 1 0 7
+```
