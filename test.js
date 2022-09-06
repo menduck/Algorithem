@@ -1,23 +1,23 @@
 const fs = require('fs');
-const inputData = fs.readFileSync(0,'utf8').toString().split(" ");
+const inputData = fs
+    .readFileSync(0,'utf8')
+    .toString()
+    .trim()
+    .split('\n')
+    
+const caseN = parseInt(inputData[0])
+const data = inputData[1]
+    .split(" ")
+    .map((i) => parseInt(i));
 
-let ABC = [parseInt(inputData[0]),parseInt(inputData[1]),parseInt(inputData[2])];
-ABC.sort();
-
-
-const A = ABC[0];
-const B = ABC[1];
-const C = ABC[2];
-
-if (A == B && B ==C){
-    result1 = 10000+A*1000
-    console.log(result1);
-} else if (A===B || B ===C ){
-    if (A ===B){
-        console.log(1000+A*100);
-    } else if( B ===C ){
-        console.log(1000+B*100);
-    }
-} else if(A !== B && B !== C){
-    console.log(C*100);
+let min = data[0];
+let max = data[0];
+for(let i = 0; i<caseN;i++){
+   if ( min > data[i]){
+    min = data[i];
+   }
+   if ( max < data[i]){
+    max = data[i];
+   }
 }
+console.log(min,max)
