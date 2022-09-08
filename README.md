@@ -1293,3 +1293,113 @@ for(let i = 0; i<caseN;i++){
 }
 console.log(min,max)
 ```
+
+## 2022.09.08
+## 2562 최댓값
+### 문제
+* 9개의 서로 다른 자연수가 주어질때, 이들 중 최댓값을 찾고 그 최댓값이 몇 번째 수인지를 구하는 프로그램을 작성하시오.
+* 첫째 줄부터 아홉 번째 줄까지 한 줄에 하나의 자연수가 주어진다. 주어지는 자연수는 100 보다 작다.
+* 첫째 줄에 최댓값을 출력하고, 둘째 줄에 최댓값이 몇 번째 수인지를 출력한다.
+
+### 풀이
+
+```javascript
+const fs = require('fs');
+const inputData = fs
+    .readFileSync(0,'utf8')
+    .toString()
+    .trim()
+    .split('\n')
+    .map((i) => parseInt(i))
+    
+const inputDataMax = Math.max(...inputData);
+//몇 번째의 수를 구해야하기 때문에 최댓값의 인덱스 번호에 1를 더함.
+const maxIndex = inputData.indexOf(inputDataMax)+1;
+
+
+console.log(`${inputDataMax}\n${maxIndex}`);
+```
+## 3052 나머지
+### 문제
+* 수 10개를 입력받은 뒤, 이를 42로 나눈 나머지를 구한다. 그 다음 서로 다른 값이 몇 개 있는지 출력하는 프로그램을 작성하시오.
+* 첫째 줄부터 열번째 줄 까지 숫자가 한 줄에 하나씩 주어진다. 이 숫자는 1,000보다 작거나 같고, 음이 아닌 정수이다.
+* 첫째 줄에, 42로 나누었을 때, 서로 다른 나머지가 몇 개 있는지 출력한다.
+
+### 풀이
+```javascript
+const fs = require('fs');
+const inputData = fs
+    .readFileSync(0,'utf8')
+    .toString()
+    .trim()
+    .split('\n')
+    .map((i) => parseInt(i))
+// inputData의 모든 수를 42로 나눈 나머지를 구함.
+const remainder = inputData.map((x) => x%42) 
+
+// set 배열을 사용해 중복을 제거함.
+const uniqueremainder = new Set(remainder);
+
+// 중복 제거한 나머지들의 개수를 셈.
+const uniqueremainderLength = [...uniqueremainder].length
+
+console.log(uniqueremainderLength)
+```
+## 중복을 제거하는 방법
+
+1.set 객체 이용
+
+```javascript
+const array = [1,2,3,1,2];
+
+const result = [...new Set(array)]; //[1,2,3]
+const result2 = Array.from(new set(array)); //[1,2,3]
+```
+Set은 유니크한 값만 가질 수 있습니다. 이를 이용하여 중복값이 있는 array를 Set객체로 만들어 중복을 제거합니다.
+
+전개 연산자를 이용하여 Set객체를 다시 배열로 만들거나 Array.from()을 사용하여 배열로 다시 변환합니다.
+
+2.filter함수와 indexof함수를 이용
+
+```javascript
+const array = [1,2,3,1,2];
+
+const result = array.filter((v,i) => array.indexOf((v) === i)); //[1,2,3]
+
+```
+filter()는 callback함수를 호출해, true값을 반환하는 모든 값을 모아 배열 형태로 만듭니다.
+indexOf() 메서드는 중복된 요소가 있는 경우, 맨 앞의 요소의 index를 반환합니다.
+
+
+따라서, filter안에 콜백함수를 indexOf를 넣어 중복을 판단하고, 중복이 되지 않은 값만 반환하게 합니다.
+
++ 검사하고 있는 요소가 첫번째 인자값이면 index값과 일치하여 반환되고 만약 중복된 요소이면 index값과 달라 배열에 반환되지 않습니다.
+
+:speaker: 배열의 요소가 많으면 효율성이 떨어집니다.
+
+
+## 1546 평균
+### 문제
+* 점수 중에 최댓값을 골랐다. 이 값을 M이라고 한다. 그리고 나서 모든 점수를 점수/M*100으로 고쳤다. 이를 평균 내는 프로그램을 작성하시오.
+* 첫째 줄에 시험 본 과목의 개수 N이 주어진다. 이 값은 1000보다 작거나 같다. 둘째 줄에 세준이의 현재 성적이 주어진다. 이 값은 100보다 작거나 같은 음이 아닌 정수이고, 적어도 하나의 값은 0보다 크다.
+* 첫째 줄에 새로운 평균을 출력한다. 실제 정답과 출력값의 절대오차 또는 상대오차가 10-2 이하이면 정답이다.
+### 풀이
+```javascript
+const fs = require('fs');
+const inputData = fs
+    .readFileSync(0,'utf8')
+    .toString()
+    .trim()
+    .split('\n')
+
+// const inputData = ['4','1 100 100 100']
+const caseN = parseInt(inputData[0])
+
+const score = inputData[1].split(' ').map((i)=>parseInt(i))
+const scoreMax = Math.max(...score);
+const newScore = score.map((i)=>i/scoreMax*100)
+
+const newScoreSum = newScore.reduce((a,b)=>a+b,0);
+const average = newScoreSum/caseN
+console.log(average)
+```
