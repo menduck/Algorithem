@@ -700,3 +700,157 @@ function solution(s){
 
 1. s[mid-1]+s[mid]
 s[i]가 문자열임으로 계산되지 않고 string타입으로 return한다.
+
+## level1 없는 숫자 더하기
+### 풀이
+```javascript
+function solution(numbers) {
+    const sum = numbers.reduce((acc,cur)=>acc+parseInt(cur),0);
+    return 45-sum ;
+}
+```
+numbers는 0에서 9까지 중복 없는 정수 배열임으로 합이 45로 정해져있다. 
+numbers의 없는 값의 합은 45에서 모두 더한 인풋값을 배면 된다.
+
+### 보완
+- 위의 코드는 정수 배열이 커지면 한계가 있다. 
+- 이를 보완하기 위해서 정수 배열의 크기와 상관없는 코드를 짜야한다.
+```javascript
+function solution(numbers){
+    let sum = 0;
+    for(let i =0; i<numbers.length;i++){
+        if(!(numbers.includes(i))){ //numbers에 i가 포함되지 않으면 i를 더한다.
+            sum +=i
+        }
+    }
+    return sum
+}
+```
+## level1 내적
+### 풀이
+```javascript
+function solution(a, b) {
+    let sum = 0;
+    for(let i=0;i<a.length;i++){
+       sum += a[i]*b[i]
+    } return sum
+}
+```
+### 다른 사람 풀이
+- reduce 사용해서 풀기
+```javascript
+function solution(a, b) {
+    return a.reduce((acc, _, i) => acc += a[i] * b[i], 0);
+}
+```
+- reduce(누적값,현재값,인덱스)
+- 현재값이 없으니 _ 초기값으로 둔다.
+
+## level1 문자열 내림차순으로 배치하기
+### 풀이
+```javascript
+function solution(s) {
+    return s.split('').sort().reverse().join('')
+}
+```
+1. s.split('')
+문자열을 sort가 용이하기 위해 array로 만든다.
+2. sort().reverse()
+정렬을 한 후 reverse를 이용하여 뒤집는다. => 내림차순
+3. join('')
+array를 다시 문자열로 만들어 준다.
+
+## level1 문자열 다루기 기본
+### 풀이
+```javascript
+function solution(s) {
+    let sum = s.split('').reduce((acc,cur)=>acc+parseInt(cur),0)
+   if (s.length == 4 || s.length == 6){
+       if(isNaN(sum) != true){
+           return true
+       }else return false       
+   }else 
+       return false
+
+}
+```
+문자열 s를 array로 만들어 각 요소들을 다 더한다.
+그 sum의 길이가 4 또는 6이고, NaN이 아니면 true
+그 외는 다 false
+* 지수형태도 false가 나온다.
+
+### 다른 사람 풀이
+```javascript
+function solution(s) {
+    let result = parseInt(s)
+    if((s.length==4||s.length==6) && result==s){
+        return true
+    }
+    return false;
+}
+```
+-parseInt
+문자와 숫자가 섞여있으면, 숫자로 시작하면 연속되는 숫자까지만 정수 형태로 반환한다. 그 외는 NaN
+
+parseInt의 특징을 이용하여 result==s가 같지 않다면 
+1.숫자+문자 여서 문자가 변환되지 않아 같지 않은 경우 2.Nan인 경우 임으로 false를 반환한다.
+
+## level1 약수의 개수와 덧셈
+### 풀이
+```javascript
+//약수의 개수를 구하는 함수
+function divisorCount(num){
+    let countN =0;
+    for(let i =1;i<=num;i++){
+       if(num%i === 0) countN++
+    }return countN
+} 
+// 약수의 개수 홀짝에 따라 더하고 빼는 함수
+function soloution(left,right){
+    let answer = 0;
+    for(let j = left;j<=right;j++){
+        if(divisorCount(j)%2===0){
+            answer += j ;
+        } else answer -= j;
+    } return answer
+}
+```
+### 삽질
+1. 이중 for문으로 처음에 접근했는데 풀지 못했다. 아직 for문 개념이 확실히 잡히지 않은거 같다.
+2. a^n*b^n의 약수의 개수는 (n+1)*(m+1) 로 접근했는데 소인수분해 코드 짜는 것을 실패했다.
+
+### 다른 사람 풀이
+```javascript
+function solution(left, right) {
+    var answer = 0;
+    for (let i = left; i <= right; i++) {
+        if (Number.isInteger(Math.sqrt(i))) {
+            answer -= i;
+        } else {
+            answer += i;
+        }
+    }
+    return answer;
+}
+```
+약수의 개수가 홀수이면, 그 수의 제곱근은 정수이다. -> 제곱수의 약수는 +1이니깐
+
+-이중 for문
+```javascript
+function solution(left, right) {
+  let answer = 0;
+
+  for (let i = left; i <= right; i++) {
+    let count = 0; //약수의 개수 기본값설정
+    for (let j = 1; j <= i; j++) {
+      if (i % j === 0) count++; // 약수 조건이 되면 +1
+    }
+    if (count % 2) answer -= i;
+    else answer += i;
+  }
+
+  return answer;
+}
+```
+- count=0의 위치를 첫번째 for문 밖으로 빼서 제대로 카운팅이 되지 않았고, 약수를 array로 만들어서 그 array의 길이로 짝홀을 판단하려고 해서 더 복잡하게 코드를 짜려고 했다. 
+- 약수를 배열 생성하지 않아도 카운팅 할 수 있는 법을 알았다.
