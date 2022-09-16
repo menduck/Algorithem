@@ -854,3 +854,242 @@ function solution(left, right) {
 ```
 - count=0의 위치를 첫번째 for문 밖으로 빼서 제대로 카운팅이 되지 않았고, 약수를 array로 만들어서 그 array의 길이로 짝홀을 판단하려고 해서 더 복잡하게 코드를 짜려고 했다. 
 - 약수를 배열 생성하지 않아도 카운팅 할 수 있는 법을 알았다.
+
+## level1 행렬의 덧셈
+### 풀이
+```javascript
+function solution(arr1, arr2) {
+    let answer = [];
+   for(let i =0;i<arr1.length;i++){
+       let temp =[];
+       for(let j=0;j<arr1[0].length;j++){
+           temp.push(arr1[i][j]+arr2[i][j])
+       } answer.push(temp)
+       
+   } return answer
+
+}
+```
+처음 temp를 선언하지 않고 모두 answer에 푸시하도록 했더니 [4,6,7,9]로 array가 구분되서 나오지 않았다.
+두번째 for문에서 임시로 temp를 놓고 array의 합이 나올때마다 push하고 2차 for문이 끝나면 비워지게 했다.
+
+### 다른 사람 풀이
+```javascript
+function solution(left,right){
+    return left.map((a,i)=>a.map((b,j)=> b+right[i][j]))
+}
+```
+순차적으로 진행해보기
+left=[[1,2],[3,4]];
+right=[[5,6],[7,8]];
+
+a=[1,2] i=0
+a의 b는 1, j=0
+
+1+right[0][0] = 1+5 =6 이런식으로 계산이 된다.
+
+## level1 직사각형 별찍기
+### 풀이
+```javascript
+process.stdin.setEncoding('utf8'); //입력을 받는 코드
+process.stdin.on('data', data => { //입력값을 data로 받고 "5 3"
+    const n = data.split(" "); //data를 띄어쓰기로 나눈다 n = [5,3]
+    const a = Number(n[0]), b = Number(n[1]); // a=5,b=3
+    console.log(("*".repeat(a)+'\n').repeat(b))
+});
+```
+*를 a만큼 반복하고 엔터값로 구분하는 것이 1횡
+횡을 b만큼 반복하여 직사각형을 만든다.
+
+## level1 부족한 금액 계산하기
+### 풀이
+```javascript
+function solution(price, money, count) {
+    let pay = 0;
+    //방문횟수만큼 곱해 pay에 더해줌.
+   for(let i = 1;i<=count;i++){
+       pay += price*i
+   } 
+   // 내야될 돈이 가진돈 보다 크면 그 차이를 반환한다. 아니면 0
+    if(pay>money) {
+        return pay-money
+    } else return 0
+}
+```
+주의! 0을 반환하고 싶으면 return 0 이다. return "0"이라 하지 말 것!
+
+>> 마지막 조건문 삼항 연산자로 표현하기
+
+return pay>money ? pay-money:0
+
+### 다른 사람 풀이
+```javascript
+function solution(price, money, count) {
+    const tmp = price * count * (count + 1) / 2 - money;
+    return tmp > 0 ? tmp : 0;
+}
+```
+가우스 공식을 이용해서 풀었다
+등차수열 1~n까지의 합이 n(n+1)/2 에서 price곱해 내야할 돈을 구했다.
+!!!!!!!!!!!!!코테 끝나고 다시 보기~!!!!!!!!!!!!!!!!!!
+
+## level1 같은 숫자는 싫어
+### 풀이
+```javascript
+function solution(arr)
+{   
+    let answer=[arr[0]];
+    for(let i = 0;i<arr.length-1;i++){
+       if( arr[i] != arr[i+1] ) answer.push(arr[i+1]) //요소 두개씩 비교. 각각 다르면 오른쪽 요소가 answer에 들어간다.
+    } return answer
+    
+}
+```
+요소 두개씩 비교하여 다르면 두번째 요소가 answer에 들어간다.
+인덱스0번의 요소가 들어가지 않는 것을 방지하여 처음 answer에 arr[0]를 미리 넣어 놓는다.
+
+### 다른 사람 풀이
+```javascript
+function solution(arr){
+    return arr.filter((v,i)=>v!= arr(i+1))
+
+}
+```
+요소가 그 다음 요소와 다를때, 필터 처리되어 남는다.
+마지막 인덱스의 값은 undefined랑 비교하게 되어 마지막 인덱스가 저장된다.
+
+##
+### 풀이
+```javascript
+function solution(s) {
+    let arr = s.split(' '); 
+    let answer = [];
+    for(let i = 0;i<arr.length;i++){
+        let temp = [];
+        for(let j =0 ; j<arr[i].length;j++){
+            if(j%2===0) temp.push(arr[i][j].toUpperCase())
+            else temp.push(arr[i][j].toLowerCase())
+        } answer.push(temp.join(''))
+    } return answer.join(' ')
+}
+```
+낱말을 array로 넣기 위해 s를 split로 띄어쓰기 기준으로 나눴다.
+그 array를 for문을 이용하여 인덱스가 짝수이면 대문자 홀수이면 소문자로 반환한 값을 temp에 잠시  join으로 합쳐 넣었다.
+answer값이 [TrY,HeLlO,WoRlD]로 되어있으므로 마지막에 join(' ')을 해주어 띄어쓰기로 구분하여 문자열로 변환한다.
+
+### 삽질
+s에 소/대문자가 섞일지 모르고 인덱스가 짝수일때 대문자로만 바꿔주고 , 홀수일때 소문자로 바꿔주지 않았다.
+
+### 다른 사람 풀이
+- map() 이용해서 풀기
+```javascript
+function solution(s) {
+
+    let strArr = s.split(' ');
+
+    let wordTransArr = strArr.map( (word) => word.split('').map( // [ 't', 'r', 'y' ]
+
+        (curr, index) => index % 2 == 0 ? word[index].toUpperCase() : word[index].toLowerCase()                                  
+    ).join(""));
+
+    return wordTransArr.join(" ");
+
+}
+```
+## level1 3진법 뒤집기
+### 풀이
+```javascript
+function solution(n) {
+   let reversedN = n.toString(3).split('').reverse().join('')
+   return parseInt(reversedN,3)
+}
+```
+1. Number.toString([radix])
+: 숫자를 문자열로 변환하여 반환 / number를 radix(진수)의 값으로 변환한 값을 문자열로 반환
+2. parseInt(string,radix)
+: string값을 radix로 분석한 정수로 반환한다.
+
+### 다른 사람 풀이
+- 내장 함수를 몰랐을때 이렇게 풀고 싶었는데 재귀함수로 만들기 어려웠다. 
+```javascript
+function solution(n){
+    const answer = [];
+    while(n!==0){ //n이 0이 아니면
+        answer.unshift(n%3); //n을 3으로 나눈 나머지를 answer에 추가한다.
+        n = Math.floor(n/3); // n은 다시 3으로 나눈 몫이 된다.
+    } return answer.reduce((acc,v,i)=>acc+(v*Math.pow(3,i)),0); // reverse할 필요없이 10진법을 만들어 줄때 반대로 계산하면 된다.
+}
+```
+reverse가 되어 0*3^3 + 0*3^2 + 2*3^1 + 1*3^0 으로 십진법 변환 계산을 해줘야 되지만 인덱스를 차례대로 주어
+1*3^0 + 2*3^1 + 0*3^2 + 0*3^3 로 계산하고 reduce를 사용해 누적해서 합을 반환한다.
+
+## level1 예산
+### 풀이
+```javascript
+//최대 지원할 수 있는 부서의 수 구하는 함수
+function solution(d, budget) {
+    let sum = 0, caseN = 0;
+   d.sort((a,b)=>a-b);
+    for (let i = 0;i<d.length;i++){
+     sum += d[i]
+        if(sum <= budget)
+            caseN++
+    } return caseN++
+}
+```
+- 최대 지원할 수 있는 부서의 수를 구해야하기 때문에, 제일 작은 예산이 필요한 부서를 꼭 필요하다
+- d를 오름차순으로 정렬한 다음 요소들을 누적합계하여 몇 개의 부서의 신청예산이 예산 값보다 같거나 작은지 카운팅 해준다.
+
+## level1 시저암호
+### 풀이
+- AaBbCc~를 기준값으로 잡고 기준값의 인덱스값을 i+(n*2)로 넣고 뽑아서 answer값에 push하고 싶었는데 실패했다.
+- 아스키코드값을 이용해서도 풀 수 있다.
+
+```javascript
+function solution(s, n) {
+    var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var lower = "abcdefghijklmnopqrstuvwxyz";
+    var answer= '';
+
+    for(var i =0; i <s.length; i++){
+        var text = s[i];
+        if(text == ' ') {
+            answer += ' '; 
+            continue;
+        }
+        var textArr = upper.includes(text) ? upper : lower;
+        var index = textArr.indexOf(text)+n;
+        if(index >= textArr.length) index -= textArr.length;
+        answer += textArr[index];
+    }
+    return answer;
+}
+```
+-아스키값 이용한 함수
+```javascript
+function solution(s, n){
+    return s.split("").map(value => {
+        if (value === " ") return value; //공백이 있다면 그대로 공백값을 준다.
+        return value.toUpperCase().charCodeAt() + n > 90 //Z를 초과한다면
+        ? String.fromCharCode(value.charCodeAt() + n - 26) //26(알파벳 개수)를 빼준다
+        : String.fromCharCode(value.charCodeAt() + n)// 그게 아니라면 n값을 더한 값을 문자로 반환해준다.
+    }).join("");
+}
+```
+## level1 [1차]비밀지도
+```javascript
+function solution(n, arr1, arr2) {
+ let binaryArr1 = arr1.map(v=>v.toString(2).padStart(n,0)); //n에 맞게 앞에 0을 채워줌
+ let binaryArr2 = arr2.map(v=>v.toString(2).padStart(n,0));
+    answer = [];
+    for(let i =0;i<n;i++){ //이진수가 된 arr두개를 문자열로 합친다.
+        let temp =[]
+        for(let j =0;j<n;j++){
+        temp.push(binaryArr1[i][j] + binaryArr2[i][j])
+        } answer.push(temp)
+    }  return answer.map(a=>a.map(b=>{ //안에 있는 요소가 00이면 공백을 나머지는 #을 반환하고 join한다.
+        if(b!=='00') return '#';
+        else return ' ';
+
+    }).join(''))
+```
