@@ -1093,3 +1093,192 @@ function solution(n, arr1, arr2) {
 
     }).join(''))
 ```
+## level1 최소직사각형
+### 풀이
+```javascript
+function solution(sizes) {
+    let w = sizes.map(v =>v[0]);
+    let h = sizes.map(v =>v[1]);
+
+    for(let i =0; i<sizes.length;i++){
+        if(w[i]<h[i]){
+            let temp = w[i]; //w와 h 자리 바꾸기 위해 임시로 temp에 w를 넣어 놓는다.
+            w[i] = h[i];w
+            h[i] = temp;
+        }
+    } return Math.max(...w)*Math.max(...h)
+}
+```
+-temp에 넣어놓을 필요 없이 map으로 하는 법
+const rotated = sizes.map(([w,h])=>w<h?[h,w]:[w,h]);
+
+## level1 문자열 내 마음대로 정렬하기
+### 풀이
+```javascript
+function solution(strings, n) {
+    let strN=[];
+    for(let i =0;i<strings.length;i++){
+        strN.push(strings[i][n])
+    } 
+    strN.sort()
+    let answer =[];
+    for(let j =0;j<strings.length;j++){
+        for(let k = 0;k<strings.length;k++){
+            if(strN[j] == strings[k][n])
+                answer.push(strings[k])
+        } 
+    } return answer
+   
+     
+}
+```
+-n번째 인덱스 값이 중복되면 사전순으로 정렬되야되는데, 예외 처리에 실패했다.
+
+### 다른 사람 풀이
+```javascript
+function solution(strings, n) {
+    strings.sort((a,b)=>{
+        if(a[n]>b[n]){ // a[n]이 더 크면
+            return 1 // 그대로
+        } else if (a[n]<b[n]){ //a[n]이 더 작으면
+            return -1 //뒤로 보낸다
+        } else{ // 주어진 인덱스가 같을 경우
+            if(a>b){ //문자열을 비교한다.
+                return 1;
+            } else return -1;
+        }
+    })
+    return strings
+}
+```
+
+## level1 K번째 수
+### 풀이
+```javascript
+function solution(array, commands) {
+    // i~j까지 문자열 자른다.
+    let newArr=[];
+    for(let i =0;i<commands.length;i++){
+    let temp = array.slice(commands[i][0]-1,commands[i][1]);
+    newArr.push(temp)
+    }  // 자른 문자열 정렬
+        result = [];
+        for(let j=0;j<commands.length;j++){
+        result.push(newArr[j].sort((a,b)=>a-b))
+            
+    } // k번째 원소 반환한다.
+    return result.map((v,i)=>v[commands[i][2]-1])
+}
+```
+-같은 방식이지만 좀 더 정리된 코드
+```javascript
+function solution(array,commands){
+    let answer=[];
+    for(let i =0;i<commands.length;i++){
+        let num = commands[i];
+        let slicedArr = array.slice(num[0]-1,num[1]);
+        answer.push(slicedArr.sort((a,b)=>a-b)[num[2]-1])
+    } return answer;
+}
+```
+
+## level1 숫자 문자열과 영단어
+### 풀이
+```javascript
+function solution(s) {
+    s = s.replace(/zero/gi, 0)
+    .replace(/one/gi, 1)
+    .replace(/two/gi, 2)
+    .replace(/three/gi, 3)
+    .replace(/four/gi, 4)
+    .replace(/five/gi, 5)
+    .replace(/six/gi, 6)
+    .replace(/seven/gi, 7)
+    .replace(/eight/gi, 8)
+    .replace(/nine/gi, 9)
+    return Number(s);
+} 
+```
+g는 모든 내용 교체, i는 대소문자 구별하지 않는 것을 의미한다.
+
+### 다른 사람 풀이
+```javascript
+function solution(s) {
+    let numbers = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    var answer = s;
+
+    for(let i=0; i< numbers.length; i++) {
+        let arr = answer.split(numbers[i]);
+        answer = arr.join(i);
+    }
+
+    return Number(answer);
+}
+```
+!!!!!!!!!!!!!!!!!다시 한번!!!!!!!!!!!!!!! https://jaekwan.tistory.com/127
+
+## level1 두 개 뽑아서 더하기
+### 풀이
+```javascript
+function solution(numbers) {
+   const sortedNum = numbers.sort((a,b)=>a-b); //정렬부터 해준다.
+    let allnum = [];
+    // 더할 수 있는 모든 경우의 수를 allnum에 저장한다.
+    for(let i =0;i<numbers.length;i++){
+        for(let j=0;j<numbers.length;j++){
+        if(i!=j){
+            allnum.push(numbers[i]+numbers[j])
+        }
+    } 
+    } // 중복되는 경우의 수를 제거하고 오름차순으로 나타낸다.
+    let result = [...new Set(allnum)].sort((a,b)=>a-b)
+    return result
+
+}
+```
+- set()을 한다고해서 다 오름차순으로 되는 건 아니다.
+- i != j 조건으로 할 필요없이 j=i+1로 설정하면 자기 자신을 더하는 경우의 수가 빠진다.
+
+## level1 2016년
+### 풀이
+```javascript
+function solution(a, b) {
+    let date = new Date(2016,a-1,b).getDay() 
+   const week =['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    return week[date]
+   
+}
+```
+- new Data(년,월,일)
+날짜를 숫자로? 변환시켜줌. 월은 0부터 11까지다 1월은 0 주의하자.
+
+## level1 포켓몬
+### 풀이
+```javascript
+// 가질 수 있는 포켓몬의 종류의 수를 구하는 함수
+function solution(nums) {
+    let getNum = (nums.length) /2
+    let newNums = [...new Set(nums)].sort((a,b)=>a-b)
+    if(newNums.length >= getNum){
+        return getNum
+    } else
+        return newNums.length
+}
+```
+## level1 소수찾기
+### 풀이
+```javascript
+//소수 찾기
+function primeNum(num) {
+    for(let i =2;i<=Math.sqrt(num);i++){ 
+    if(num%i===0) return false; //2부터 제곱근까지 한번이라도 나눠떨어지면 소수가 아님.
+    } return true;
+}
+//2~n까지 소수의 개수 구하는 함수
+function solution(n){
+    let result =0
+    for(let j=2;j<=n;j++){
+        if(primeNum(j)) result++
+    } return result
+}
+```
