@@ -6,7 +6,6 @@ const score = input.split('\n')[1].split(' ');
 const result = inputName.reduce((acc,cur,idx)=>{
   acc[cur] = score[idx];
   return acc;
-  console.log(acc)
 },new Object);
 
 //reduce의 두번째 인수를 new Object를 주어 빈 객체를 만든다.

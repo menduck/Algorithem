@@ -21,4 +21,4 @@ const planets = {
 };
 
 const planetName = "천왕성"
-console.log(planets[planetName])
+console.log(planets[planetName]) //객체[키값]을 넣어주면 value값이 나온다.
