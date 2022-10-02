@@ -1,0 +1,24 @@
+
+function bubbleSort(arr){
+  let noSwap ;
+  for(let i = arr.length;i>=0;i--){
+  noSwap = true; // 두번째 for문을 순회하지 않고 빠져나감. 
+    for(let j = 0;j<i-1;j++){
+      console.log(arr,arr[j],arr[j+1])
+    if(arr[j]>arr[j+1]){
+        let temp = arr[j];
+        arr[j] = arr[j+1];
+        arr[j+1] = temp;     
+        noSwap = false;  // 배열이 교환이 되면 noSwap 은 false임으로 빠져나가지 못한다.
+      }
+  } 
+  if(noSwap) break;
+}
+  return arr
+
+}
+
+const arr = [8,1,2,3,4,5,6,7];
+
+console.log(bubbleSort(arr))
+
