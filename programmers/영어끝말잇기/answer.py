@@ -33,7 +33,8 @@ def solution(n, words):
 # - 검사에 통과된 단어들을 valie_words의 배열에 넣지 않고 중복이 되었는지 확인할 수 있다.
 # - words[i] in words[:i]
     # - words의 첫 요소부터 i까지 중복된 요소가 있는지 확인한다.
-  
+
+# 보완한 최종 코드
 def solution(n, words):
     for i in range(1,len(words)): # 두번째 요소부터 끝까지 순회한다.
         if words[i] in words[:i] or words[i-1][-1] != words[i][0]:
@@ -41,3 +42,14 @@ def solution(n, words):
             break # 검사에 통과되지 않으면 [번호, 차례]를 출력하고 for문을 종료한다.
         else:
           return [0,0]
+
+'''
+# 코드리뷰
+1. 시간복잡도를 생각해보자
+- 현재 n은 100이하이지만 만약 10000이라면
+- 내 코드의 시간 복잡도는 대략 for문 O(n) 내부에 리스트 탐색 O(n)이기 때문에 O(n^2)으로 계산된다.
+- 중복을 검사할때 set()탐색을 사용하여 시간을 줄이자.
+    - set()의 리스트 탐색은 O(1)이다.
+2. 요구사항을 꼼꼼하게 보자.
+  - 한 단어의 길이는 1이상이라고 명시되어있다.
+'''
