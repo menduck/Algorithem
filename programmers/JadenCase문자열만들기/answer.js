@@ -16,3 +16,4 @@ for(let i =0;i<strInput.length;i++){
   
 } 
 console.log(answer.join(' '))
+
