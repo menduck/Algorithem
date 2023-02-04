@@ -10,3 +10,5 @@ function solution(A,B){
 
   } return sum
 }
+
+console.log(solution(A,B))
