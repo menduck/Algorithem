@@ -8,10 +8,9 @@ def solution(s):
 
     s_int.sort(key = len)
 
-    answer = s_int[0]
-
-    for i in range(1,len(s_int)):
-        temp = set(s_int[i]) - set(answer)
-        answer.append(*temp)
-
+    answer = []
+    for ele_s in s_int:
+        for ele in ele_s:
+            if ele not in answer:
+                answer.append(ele)
     return answer
