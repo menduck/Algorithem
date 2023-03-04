@@ -35,7 +35,7 @@ for _ in range(t):
 
     graph = [[0]*n for _ in range(m)]
 
-    # 인접 리스트 생성
+    # 인접 행렬 생성
     for _ in range(k):
         v1, v2 = map(int, sys.stdin.readline().strip().split())
         graph[v1][v2] = 1
