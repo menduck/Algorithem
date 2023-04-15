@@ -63,11 +63,9 @@ console.log(solution(["Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234
 - Object
   - key : 문자열 또는 심벌 값, 중복된 값 X
   - 이터러블 하지 않음.
-  - 요소 개수 확인 시 Object.key(obj).length
+  - 요소 개수 확인 시 Object.keys(obj).length
 - Map
   - key : 객체를 포함한 모든 값, 중복된 값 X
   - 이터러블 함
   - 요소 개수 확인 시 map.size
-
-
-*/
+*/ 
