@@ -21,10 +21,18 @@ function solution(files){
 
 // solution - 실패
 /**
+ * 실패원인 & 해결방안
  * 새로운 오브젝트에 HEAD와 NUMBER를 담아 조건에 맞게 정렬함.
  * 하지만 반환값은 처음 files 형태로 반환해야되기때문에 TAIL를 다시 합치고 순서에 맞게 다시 for문을 돌아야 원본형태로 정렬할 수 있음.
  * - 해결방안으로 처음부터 sort안에서 노는 방법을 생각함.
  */
+
+/**
+ * 코드리뷰
+ * 아래 코드에서 [HEAD, NUMBER, file] 형태로 담고 다중 조건 sort를 하고 세 번째 요소인 file을 차례대로 출력하면 됨.
+ * 굳이 다시 HEAD, NUMBER, TAIL로 합친 다음 sort에 맞게 재정렬을 하지 않아도 됨.
+ */
+
 function solution(files) {
   // { HEAD: 'f-', NUMBER: 5 }, ...
   const fileArray = []
