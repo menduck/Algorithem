@@ -1,4 +1,4 @@
-// 에라토스테네스의 체
+// 소수 판별 함수
 function isPrimeNumber(number) {
   if (number <= 1) return false;
   if (number % 2 === 0) return number === 2 ? true : false;
