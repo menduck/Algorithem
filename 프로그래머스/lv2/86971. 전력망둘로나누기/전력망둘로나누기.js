@@ -20,15 +20,16 @@ function solution(n, wires) {
     tree[b].push(a);
   });
 
-  let answer = 0;
+  // 기준이 되는 노드 eles
   tree.forEach((eles, i) => {
     eles.forEach((v) => {
       const visited = Array.from(Array(n + 1), () => false);
+      // 끊어졌다고 생각해야 되는 노드 v를 방문했다고 처리하고 기준이 되는 노드와 연결된 노드 개수를 찾는다.
       visited[v] = true;
       result.push(getBfsCount(i, visited, tree));
     });
   });
-  const DiffArr = result.map((v) => Math.abs(n - v - v));
+  const DiffArr = result.map((v) => Math.abs((n - v) - v));
 
   return Math.min(...DiffArr);
 }
